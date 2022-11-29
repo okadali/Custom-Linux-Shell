@@ -71,13 +71,36 @@ int main(int argc, char *argv[]) {
                 printf("not enough parameters\n");
             }
             else {
+                char *pass[80];
+                int passIx = 0;
+                int isError = 0;
                 if(strcmp(inputs[1],"-f") == 0) {
-
+                    if (ix <= 3) {
+                        printf("not enough parameters\n");
+                        isError = 1;           
+                    }
                 }
-                else {
-                    
+                
+                if(!isError) {
+                    for(int x = 1 ; x < ix ; x++) {
+                        pass[passIx++] = inputs[x];
+                    } 
+                    pass[passIx] = (char*)0;
+                    int f = fork();
+                    int i;
+                    if(f == 0) {
+                        i = execv("writef", pass);
+                        perror("writef failed\n");
+                        return 0;
+                    }
+                    else {
+                        wait(&i);
+                    }
                 }
             }
+        }
+        else {
+            printf("unknown command\n");
         }
     }
     
