@@ -32,6 +32,23 @@ int main(int argc, char *argv[]) {
         else if(strcmp(inputs[0],"cat") == 0) {
             printf("cat:%s\n",inputs[1]);
         }
+        else if(strcmp(inputs[0],"bash") == 0) {
+            char *bashInput;
+            int cont = 1;
+            while(cont) {
+                bashInput = readline("bash>>");
+                if(strlen(bashInput) == 0) {
+                    continue;
+                }
+
+                if (strcmp(bashInput,"exit") == 0) {
+                    cont = 0;
+                }
+                else {
+                    system(bashInput);
+                }
+            }            
+        }
         else if(strcmp(inputs[0],"ls") == 0) {
             DIR *d;
             struct dirent *dir;
