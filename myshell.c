@@ -55,8 +55,9 @@ int main(int argc, char *argv[]) {
             d = opendir(".");
             if (d) {
                 while ((dir = readdir(d)) != NULL) {
-                    printf("%s\n", dir->d_name);
+                    printf("%s ", dir->d_name);
                 }
+                printf("\n");
                 closedir(d);
             }
         }

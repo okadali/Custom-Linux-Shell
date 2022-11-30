@@ -8,38 +8,23 @@ int main(int argc, char *argv[]) {
     if(strcmp(argv[1],"execx") == 0) {
         char *pass[80];
         int passIx = 0;
-        if(argc < 6 ){
-            printf("not enough parameters\n");
+        for(int i = 3 ; i < argc ; i++) {
+            pass[passIx++] = argv[i];
         }
-        else {
-            char *input[80];
-            int inputIX = 0;
-            for(int x = 3 ; x < argc ; x++) {
-                input[inputIX++] = argv[x];
-            }
-
-            input[inputIX] = (char *)0;
-            for(int i = 0 ; i < atoi(argv[0]) ; i++) {
-                int f = fork();
-                int i;
-                if (f == 0) {
-                    i = execv(argv[4], input);
-                    perror("execv failed\n");
-                    return 0;
-                }
-                else {
-                    wait(&i);
-                }
-            }
-        }
+        pass[passIx] = (char*)0;
         
-        //argv[0] = times
-        //argv[1] = selected program
-        //argv[2] = -t
-        //argv[3] = times
-        //argv[4] = calisacak program
-        //argv[5] = calisacak programin parametreleri
-
+        for (int x = 0; x < atoi(argv[0]); x++) {
+            int f = fork();
+            int i;
+            if (f == 0) {
+                i = execv("execx", pass);
+                perror("writef failed\n");
+                return 0;
+            }
+            else {
+                wait(&i);
+            }
+        }
     }
     else if(strcmp(argv[1],"writef") == 0) {
         if (argc < 3) {
@@ -66,6 +51,9 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+    }
+    else {
+        printf("not a valid input\n");
     }  
     
     return 0;
